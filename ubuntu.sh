@@ -71,7 +71,7 @@ EOF
 }
 
 function restart_networking {
-    ifdown eth0 && ifup eth1 && return 0
+    ifdown eth0 && ifup eth0 && return 0
     return 1
 }
 
