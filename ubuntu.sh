@@ -36,6 +36,9 @@ function is_vmware {
     return 1
 }
 
+###############################################################################
+# NETWORKING
+###############################################################################
 function get_current_ip {
     ip -o -4 addr show eth0 | awk '{ print $4; }' | cut -d/ -f1
 }
@@ -69,6 +72,17 @@ function restart_networking {
     return 1
 }
 
+
+
+###############################################################################
+# UPGRADE
+###############################################################################
+function upgrade_machine {
+    apt-get update > /dev/null 2>&1 || return 1
+    apt-get upgrade -y > /dev/null 2>&1 || return 1
+    return 0
+}
+
 ###############################################################################
 # MAIN
 ###############################################################################
@@ -98,4 +112,13 @@ if ! restart_networking; then
 fi
 
 print_info "Static IP address set."
+
+
+# Upgrade machine
+print_info "Upgrading machine..."
+if ! upgrade_machine; then
+    exit_failure "Machine could not be upgraded."
+fi
+print_info "Machine upgraded."
+
 
