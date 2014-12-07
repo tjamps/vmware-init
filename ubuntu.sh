@@ -8,8 +8,8 @@ function exit_failure {
 }
 
 function is_os_ubuntu {
-    command -v lsb_relase > /dev/null 2>&1 || return 1
-    lbs_release -a | grep -i ubuntu > /dev/null 2>&1 && return 0
+    command -v lsb_release > /dev/null 2>&1 || return 1
+    (lsb_release -a | grep -i ubuntu) > /dev/null 2>&1 && return 0
     
     return 1
 }
